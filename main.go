@@ -2,13 +2,30 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
+	_ "github.com/joho/godotenv/autoload"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
 )
 
 func main() {
 	app := fiber.New()
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Welcome to Planter")
+	apiAccessToken := os.Getenv("API_ACCESS_TOKEN")
+
+	app.Get("/plants", func(c *fiber.Ctx) error {
+		resp, err := http.Get("https://trefle.io/api/v1/plants?token=" + apiAccessToken)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatalln(err)
+		}
+
+		return c.Send(body)
 	})
 
 	app.Listen(":3000")
