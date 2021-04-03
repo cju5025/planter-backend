@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	_ "github.com/joho/godotenv/autoload"
 	"io/ioutil"
 	"log"
@@ -11,6 +12,7 @@ import (
 
 func main() {
 	app := fiber.New()
+	app.Use(cors.New())
 
 	apiAccessToken := os.Getenv("API_ACCESS_TOKEN")
 
