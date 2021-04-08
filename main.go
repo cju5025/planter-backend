@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/qinains/fastergoding"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -13,6 +14,7 @@ import (
 func main() {
 	app := fiber.New()
 	app.Use(cors.New())
+	fastergoding.Run()
 
 	apiAccessToken := os.Getenv("API_ACCESS_TOKEN")
 
