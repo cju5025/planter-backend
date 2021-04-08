@@ -21,12 +21,12 @@ func main() {
 	app.Get("/plants", func(c *fiber.Ctx) error {
 		resp, err := http.Get("https://trefle.io/api/v1/plants?token=" + apiAccessToken)
 		if err != nil {
-			log.Fatalln(err)
+			return c.JSON(err)
 		}
 
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatalln(err)
+			return c.JSON(err)
 		}
 
 		return c.Send(body)
